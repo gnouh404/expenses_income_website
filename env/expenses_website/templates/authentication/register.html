@@ -1,4 +1,6 @@
-{% extends "base_auth.html" %} {% block content %}
+{% extends "base_auth.html" %} 
+{% load static %}
+{% block content %}
 <div class="row">
   <div class="col-md-4"></div>
 
@@ -17,10 +19,15 @@
                 name="username"
                 placeholder="Username"
                 id="usernameField"
-                class="form-control form-control-sm"
+                class="form-control form-control-sm "
               />
             </div>
+            <div class="invalid_feedback invalid-feedback" style="display:none">
+            </div>
+            <p class="text-sm text-success usernameSuccessOutput"></p> 
+            
           </div>
+          
           <div class="mb-3">
             <div class="form-group">
               <input
@@ -31,9 +38,11 @@
                 class="form-control form-control-sm"
               />
             </div>
+            <div class="emailFeedbackArea invalid-feedback" style="display:none">
+            </div>
           </div>
 
-          <div class="mb-3">
+          <div class="mb-3 mt-3">
             <div class="form-group">
               <input
                 type="password"
@@ -42,7 +51,7 @@
                 id="passwordField"
                 class="form-control form-control-sm"
               />
-              <div class="float-end py-2">SHOW</div>
+              <div class="float-end py-2"><small>SHOW</small></div>
               <br />
             </div>
           </div>
@@ -57,4 +66,5 @@
 
   <div class="col-md-4"></div>
 </div>
+<script src="{% static "js/register.js" %}"></script>
 {% endblock content %}
