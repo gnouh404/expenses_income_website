@@ -75,7 +75,16 @@
   .bd-mode-toggle .dropdown-menu .active .bi {
     display: block !important;
   }
-  
+
+  small.showPassword{
+    cursor: pointer;
+    transition: all transform 1s;
+  }
+  small.showPassword:hover {
+    
+    transform: scale(1.1);
+  }
+
 
 
 

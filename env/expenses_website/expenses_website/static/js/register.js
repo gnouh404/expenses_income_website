@@ -4,6 +4,21 @@ const emailField = document.querySelector('#emailField');
 const feedbackArea = document.querySelector('.invalid_feedback');
 const emailFeedbackArea = document.querySelector('.emailFeedbackArea');
 const usernameSuccessOutput = document.querySelector('.usernameSuccessOutput');
+const showPassword = document.querySelector('.showPassword');
+const passwordField = document.querySelector('#passwordField');
+// lam hiện, ẩn password
+showPassword.addEventListener('click',(e) =>{
+    if(showPassword.textContent==='SHOW'){
+        showPassword.textContent = 'HIDE';
+        passwordField.setAttribute("type", "text");
+    }else{
+        showPassword.textContent = 'SHOW';
+        passwordField.setAttribute("type", "password");
+    }
+})
+
+
+
 
 // username validate
 usernameField.addEventListener('keyup',(e) =>{
