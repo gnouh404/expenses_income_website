@@ -11,7 +11,11 @@
           <h4>Register for free account</h4>
         </div>
 
-        <form action="" method="post">
+        <form action="{% url 'register' %}" method="post">
+          {% csrf_token %}
+
+          {% include "partials/_message.html" %}
+
           <div class="mb-3">
             <div class="form-group">
               <input
@@ -57,7 +61,7 @@
           </div>
 
           <div class="d-grid gap-2">
-            <button class="btn btn-primary" type="button">Button</button>
+            <input type="submit" value="Register" class="btn btn-block btn-primary submit-btn" />
           </div>
         </form>
       </div>

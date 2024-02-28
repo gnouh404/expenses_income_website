@@ -1,10 +1,11 @@
 
-from django.shortcuts import render
+from django.shortcuts import render,redirect
 from django.views import View
 from django.http import JsonResponse
 import json
 from django.contrib.auth.models import User
 from validate_email import validate_email
+from django.contrib import messages
 # Create your views here.
 # validate_email chua dung
 class EmailValidationView(View):
@@ -30,4 +31,15 @@ class UsernameValidationView(View):
             
 class RegistrationView(View):
     def get(self, request):
-        return render(request, 'authentication/register.html')    
+        return render(request, 'authentication/register.html')
+    def post(self, request):
+        # cac kieu thong bao khi nhan register
+        
+        # messages.warning(request, 'Success warning')
+        # messages.info(request, 'Success info')
+        # messages.error(request, 'Success error')
+        
+        messages.success(request, 'Success')
+        return render(request, 'authentication/register.html')
+        
+        
