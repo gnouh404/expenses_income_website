@@ -11,7 +11,7 @@
           <h4>Register for free account</h4>
         </div>
 
-        <form action="{% url 'register' %}" method="post">
+        <form action="{% url 'register' %}" method="POST">
           {% csrf_token %}
 
           {% include "partials/_message.html" %}
@@ -24,6 +24,7 @@
                 placeholder="Username"
                 id="usernameField"
                 class="form-control form-control-sm "
+                value="{{fieldVal.username}}"
               />
             </div>
             <div class="invalid_feedback invalid-feedback" style="display:none">
@@ -40,6 +41,7 @@
                 placeholder="Email"
                 id="emailField"
                 class="form-control form-control-sm"
+                value="{{fieldVal.email}}"
               />
             </div>
             <div class="emailFeedbackArea invalid-feedback" style="display:none">

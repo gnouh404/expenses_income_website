@@ -6,6 +6,7 @@ const emailFeedbackArea = document.querySelector('.emailFeedbackArea');
 const usernameSuccessOutput = document.querySelector('.usernameSuccessOutput');
 const showPassword = document.querySelector('.showPassword');
 const passwordField = document.querySelector('#passwordField');
+const submitBtn = document.querySelector('.submit-btn');
 // lam hiện, ẩn password
 showPassword.addEventListener('click',(e) =>{
     if(showPassword.textContent==='SHOW'){
@@ -40,12 +41,15 @@ usernameField.addEventListener('keyup',(e) =>{
         })
         .then((res) => res.json())
         .then((data) => {
-            console.log("data" , data);
+            
             usernameSuccessOutput.style.display = "none";
             if(data.username_error){
                 usernameField.classList.add('is-invalid');
                 feedbackArea.style.display  =   'block';
                 feedbackArea.innerHTML  =   `<p>${data.username_error}</p>`;
+                submitBtn.disabled = true;
+            }else{
+                submitBtn.removeAttribute('disabled');
             }
         });
     }
@@ -72,6 +76,9 @@ emailField.addEventListener('keyup',(e) =>{
                 emailField.classList.add('is-invalid');
                 emailFeedbackArea.style.display  =   'block';
                 emailFeedbackArea.innerHTML  =   `<p>${data.email_error}</p>`;
+                submitBtn.disabled = true;
+            }else{
+                submitBtn.removeAttribute('disabled');
             }
         });
     }
