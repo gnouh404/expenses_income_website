@@ -10,10 +10,10 @@ from django.core.mail import EmailMessage
 # url tương đối tới verification
 # mã hóa uid, token
 from django.urls import reverse   
-from django.utils.encoding import force_bytes, DjangoUnicodeDecodeError
+from django.utils.encoding import force_bytes, force_str, DjangoUnicodeDecodeError
 from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
 from django.contrib.sites.shortcuts import get_current_site
-from .utils import token_generator
+from .utils import account_activation_token
 # Create your views here.
 # validate_email chua dung
 # View là class có sẵn của django dùng làm lớp cha của các lớp cần tạo
@@ -72,7 +72,7 @@ class RegistrationView(View):
                 # lấy miền của người dùng đang sử dụng, url tương đối
                 uidb64 = urlsafe_base64_encode(force_bytes(user.pk))
                 domain = get_current_site(request).domain
-                link = reverse('activate', kwargs={'uidb64':uidb64, 'token': token_generator.make_token(user)})
+                link = reverse('activate', kwargs={'uidb64':uidb64, 'token': account_activation_token.make_token(user)})
                 active_url = "http://" + domain + link
                 # gửi mail để xác nhận
                 email_subject = "Activate your account"
@@ -94,7 +94,29 @@ class RegistrationView(View):
 # mã hóa uid, token        
 class VerificationView(View):
     def get(self, request, uidb64, token):
+        
+        try:
+            user_id = force_str(urlsafe_base64_decode(uidb64))
+            user = User.objects.get(pk=user_id)
+            # check nếu link người dùng ấn vào từ gmail đã active(check user và token có từ link) thì sẽ trả về trang login và thông báo
+            if not account_activation_token.check_token(user, token):
+                messages.info(request, 'User already activated')
+                return redirect('login')
+            # nếu user đã active thì về login, ko thì set active = true, lưu và trả về thông báo
+            if user.is_active:
+                return redirect('login')
+            else:
+                user.is_active = True
+                user.save()
+                messages.success(request, 'Account activated successfully')
+                return redirect('login')
+        
+        except Exception as ex:
+            pass        
+        
         return redirect('login')
             
-        
+class LoginView(View):
+    def get(self, request):
+        return render(request, 'authentication/login.html')      
         
