@@ -71,8 +71,35 @@
             Income Summary
           </a>
         </li>
-        
       </ul>
+      <hr class="my-3">
+
+          <ul class="nav flex-column mb-auto">
+            <li class="nav-item">
+              <a class="nav-link d-flex align-items-center gap-2" href="#">
+                <svg class="bi"><use xlink:href="#gear-wide-connected"/></svg>
+                Settings
+              </a>
+            </li>
+            <li class="nav-item">
+              
+              {% comment %} <form action="{% url "logout" %} " method = "POST">
+                {% csrf_token %}
+                <a class="nav-link d-flex align-items-center gap-2">
+                  <svg class="bi"><use xlink:href="#door-closed"/></svg>
+                  <input  type="submit" class="nav-link" value="Sign out" style="padding-left:0">
+                </a>
+              </form> {% endcomment %}
+              <form action="{% url  'logout' %}" method="POST">
+                {% csrf_token %}
+                <input
+                  class="text text-capitalize"
+                  type="submit"
+                  value="Sign out"
+                />
+              </form>
+            </li>
+          </ul>
     </div>
   </div>
 </div>
