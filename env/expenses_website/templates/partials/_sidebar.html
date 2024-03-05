@@ -83,21 +83,26 @@
             </li>
             <li class="nav-item">
               
-              {% comment %} <form action="{% url "logout" %} " method = "POST">
+               <form action="{% url "logout" %} " method = "POST" style="margin:0">
                 {% csrf_token %}
                 <a class="nav-link d-flex align-items-center gap-2">
                   <svg class="bi"><use xlink:href="#door-closed"/></svg>
-                  <input  type="submit" class="nav-link" value="Sign out" style="padding-left:0">
+                  <input  type="submit" class="nav-link" value="Sign out" style="padding:0">
                 </a>
-              </form> {% endcomment %}
-              <form action="{% url  'logout' %}" method="POST">
-                {% csrf_token %}
-                <input
-                  class="text text-capitalize"
-                  type="submit"
-                  value="Sign out"
-                />
-              </form>
+              </form> 
+              
+            </li>
+            <li class="nav-item">
+              <a class="nav-link d-flex align-items-center gap-2" href="{% url "preferences" %}">
+                <svg class="bi"><use xlink:href="#gear-wide-connected"/></svg>
+                General
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link d-flex align-items-center gap-2" href="#">
+                <i class="bi bi-person-circle"></i>
+                Account
+              </a>
             </li>
           </ul>
     </div>
