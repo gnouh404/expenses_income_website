@@ -1,5 +1,53 @@
-{% extends "base.html" %} {% block content %}
+{% extends "base.html" %} 
 
-<h1>Add Expense</h1>
+
+
+
+
+
+</div>
+
+{% block content %}
+<div class="container mt-4">
+
+<nav style="--bs-breadcrumb-divider: '>'" aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="#">Expense</a></li>
+          <li class="breadcrumb-item active" aria-current="page">My Expenses</li>
+        </ol>
+</nav>
+
+
+    <div class="card">
+        <div class="card-body">
+            <form action="{% url "add-expense" %}" method="post">
+                {% include "partials/_message.html" %}
+                {% csrf_token %}
+                <div class="form-group mb-3">
+                    <label for="">Amount</label>
+                    <input type="text" class="form-control form-control-sm" name="amount" value={{values.amount}}>
+                </div>
+                <div class="form-group mb-3">
+                    <label for="">Description</label>
+                    <input type="text" class="form-control form-control-sm" name="description" value={{values.description}}>
+                </div>
+                <div class="form-group mb-3">
+                    <label for="">Category</label>
+                    <select class="form-control form-control-sm" name="category" value={{values.category}}>
+                        {% for category in categories %}
+                            <option name = "category" value="{{category.name}}">{{category.name}}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="form-group mb-3">
+                    <label for="">Date of Expense</label>
+                    <input type="date" class="form-control form-control-sm" name="expense_date" >
+                </div>
+
+                <input type="submit" value="Submit" class="btn btn-primary btn-primary-sm">
+            </form>
+        </div>
+    </div>
+
 
 {% endblock content %}
