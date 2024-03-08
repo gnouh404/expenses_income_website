@@ -1,11 +1,12 @@
 {% extends "base.html" %} {% block content %}
 
 <div class="container mt-4">
+  
   <div class="row">
     <div class="col-md-10">
       <nav style="--bs-breadcrumb-divider: '>'" aria-label="breadcrumb">
         <ol class="breadcrumb">
-          <li class="breadcrumb-item"><a href="#">Expense</a></li>
+          <li class="breadcrumb-item"><a href="{% url "expenses" %}" style="text-decoration:none">Expense</a></li>
           <li class="breadcrumb-item active" aria-current="page">My Expenses</li>
         </ol>
       </nav>
@@ -15,7 +16,38 @@
         <a href="{% url "add-expense" %}" class="btn btn-primary">Add Expense</a>
     </div>
   </div>
-  
+  {% include "partials/_message.html" %}
+  <div class="container">
+    {% if expenses %}
+    <table class="table table-stripped table-hover" >
+      <thead>
+        <tr>
+          <th>Amount</th>
+          <th>Description</th>
+          <th>Category</th>
+          <th>Date</th>
+          <th></th>
+        </tr>
+      </thead>
+      
+        {% for expense in expenses %}
+          <tbody>
+
+            <tr style = "width:100%">
+              <td>{{expense.amount}}</td>
+              <td>{{expense.description}}</td>
+              <td>{{expense.category}}</td>
+              <td>{{expense.date}}</td>
+              <td><a href="{% url "edit-expense" expense.id %}" class="btn btn-secondary btn-sm">Edit</a></td>
+            </tr>
+ 
+          </tbody>
+       {% endfor %}
+    </table>
+    {% endif %}
+  </div>
+
+
 </div>
 
-{% include "partials/_message.html" %}{% endblock content %}
+{% endblock content %}

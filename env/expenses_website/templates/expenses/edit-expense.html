@@ -1,26 +1,26 @@
 {% extends "base.html" %} 
-
-
-
-
-
-
-</div>
-
 {% block content %}
 <div class="container mt-4">
     {% comment %} breadcrumb-bootstrap {% endcomment %}
-<nav style="--bs-breadcrumb-divider: '>'" aria-label="breadcrumb">
-        <ol class="breadcrumb">
-          <li class="breadcrumb-item"><a href="{% url "expenses" %}" style="text-decoration:none">Expense</a></li>
-          <li class="breadcrumb-item active" aria-current="page">My Expenses</li>
-        </ol>
-</nav>
+    <div class="row">
+      <div class="col-md-10">
+        <nav style="--bs-breadcrumb-divider: '>'" aria-label="breadcrumb">
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{% url "expenses" %}" style="text-decoration:none">Expense</a></li>
+            <li class="breadcrumb-item active" aria-current="page">My Expenses</li>
+          </ol>
+        </nav>
+      </div>
+      <div class="col-md-2">
+        <a href="{% url "delete-expense" expense.id %}" class="btn btn-danger btn-sm">Delete</a>
+      </div>
+    </div>
+
 
 
     <div class="card">
         <div class="card-body">
-            <form action="{% url "add-expense" %}" method="post">
+            <form action="{% url "edit-expense" expense.id %}" method="post">
                 {% include "partials/_message.html" %}
                 {% csrf_token %}
                 <div class="form-group mb-3">
@@ -34,6 +34,8 @@
                 <div class="form-group mb-3">
                     <label for="">Category</label>
                     <select class="form-control form-control-sm" name="category" value={{values.category}}>
+                      <option name = "category" selected value="{{values.category}}">{{values.category}}</option>
+
                         {% for category in categories %}
                             <option name = "category" value="{{category.name}}">{{category.name}}</option>
                         {% endfor %}
@@ -44,7 +46,7 @@
                     <input type="date" class="form-control form-control-sm" name="expense_date" >
                 </div>
 
-                <input type="submit" value="Submit" class="btn btn-primary btn-primary-sm">
+                <input type="submit" value="Save" class="btn btn-primary btn-primary-sm">
             </form>
         </div>
     </div>
