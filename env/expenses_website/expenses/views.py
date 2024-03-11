@@ -4,6 +4,8 @@ from .models import Category, Expense
 from django.contrib import messages
 #  for divide page
 from django.core.paginator import Paginator
+import json
+from django.http import JsonResponse
 # Create your views here.
 
 # protect route, tránh việc đã log out ấn quay lại vẫn ở tài khoản chưa đăng xuất
@@ -12,7 +14,7 @@ def index(request):
     categories = Category.objects.all()
     expenses = Expense.objects.filter(owner = request.user)
     # arg 1 la noi dung muon phan chia, arg 2 la so noi dung phan chia trong 1 trang
-    paginator = Paginator(expenses, 2)
+    paginator = Paginator(expenses, 3)
     page_number = request.GET.get('page')
     page_obj = Paginator.get_page(paginator, page_number)
     context ={
@@ -21,6 +23,17 @@ def index(request):
         'page_obj':page_obj,
     }
     return render(request, 'expenses/index.html',context)
+
+def search_expenses(request):
+    if request.method == 'POST':
+        search_str = json.loads(request.body).get('searchTxt')
+        expenses = Expense.objects.filter(
+            amount__istartswith=search_str, owner = request.user) | Expense.objects.filter(
+            description__icontains=search_str, owner = request.user) | Expense.objects.filter(
+            category__icontains=search_str, owner = request.user) | Expense.objects.filter(
+            date__istartswith=search_str, owner = request.user)
+        data = expenses.values()
+        return JsonResponse(list(data), safe=False)    
 
 def add_expense(request):
     categories = Category.objects.all()
