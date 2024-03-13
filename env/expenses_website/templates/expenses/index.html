@@ -32,7 +32,7 @@
       <table class="table table-stripped table-hover" >
       <thead>
         <tr>
-          <th>Amount</th>
+          <th>Amount ({{currency}})</th>
           <th>Description</th>
           <th>Category</th>
           <th>Date</th>
@@ -47,7 +47,7 @@
               <td>{{expense.amount}}</td>
               <td>{{expense.description}}</td>
               <td>{{expense.category}}</td>
-              <td>{{expense.date}}</td>
+              <td>{{expense.date | date:'d-m-Y'}}</td>
               <td><a href="{% url "edit-expense" expense.id %}" class="btn btn-secondary btn-sm">Edit</a></td>
             </tr>
  
@@ -61,7 +61,7 @@
       <table class="table table-stripped table-hover" >
         <thead>
           <tr>
-            <th>Amount</th>
+            <th>Amount ({{currency}})</th>
             <th>Description</th>
             <th>Category</th>
             <th>Date</th>
