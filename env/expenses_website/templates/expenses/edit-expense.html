@@ -43,7 +43,8 @@
                 </div>
                 <div class="form-group mb-3">
                     <label for="">Date of Expense</label>
-                    <input type="date" class="form-control form-control-sm" name="expense_date" >
+                    {% comment %} format date {% endcomment %}
+                    <input type="date" value = "{{values.date | date:'Y-m-d'}}" class="form-control form-control-sm" name="expense_date" >
                 </div>
 
                 <input type="submit" value="Save" class="btn btn-primary btn-primary-sm">

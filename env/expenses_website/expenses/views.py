@@ -6,6 +6,7 @@ from django.contrib import messages
 from django.core.paginator import Paginator
 import json
 from django.http import JsonResponse
+from userpreferences.models import UserPreference
 # Create your views here.
 
 # protect route, tránh việc đã log out ấn quay lại vẫn ở tài khoản chưa đăng xuất
@@ -17,10 +18,12 @@ def index(request):
     paginator = Paginator(expenses, 3)
     page_number = request.GET.get('page')
     page_obj = Paginator.get_page(paginator, page_number)
+    currency = UserPreference.objects.get(user = request.user).currency
     context ={
         'expenses':expenses,
         'categories':categories,
         'page_obj':page_obj,
+        'currency':currency,
     }
     return render(request, 'expenses/index.html',context)
 
@@ -31,7 +34,7 @@ def search_expenses(request):
             amount__istartswith=search_str, owner = request.user) | Expense.objects.filter(
             description__icontains=search_str, owner = request.user) | Expense.objects.filter(
             category__icontains=search_str, owner = request.user) | Expense.objects.filter(
-            date__istartswith=search_str, owner = request.user)
+            date__icontains=search_str, owner = request.user)
         data = expenses.values()
         return JsonResponse(list(data), safe=False)    
 
