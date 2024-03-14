@@ -6,20 +6,21 @@
     <div class="col-md-10">
       <nav style="--bs-breadcrumb-divider: '>'" aria-label="breadcrumb">
         <ol class="breadcrumb">
-          <li class="breadcrumb-item"><a href="{% url "expenses" %}" style="text-decoration:none">Expense</a></li>
-          <li class="breadcrumb-item active" aria-current="page">My Expenses</li>
+          <li class="breadcrumb-item"><a href="{% url "expenses" %}" style="text-decoration:none">Income</a></li>
+          <li class="breadcrumb-item active" aria-current="page">My Income</li>
         </ol>
       </nav>
     </div>
 
     <div class="col-md-2">
-        <a href="{% url "add-expense" %}" class="btn btn-primary">Add Expense</a>
+        <a href="{% url "add-income" %}" class="btn btn-primary">Add Income</a>
     </div>
+    
   </div>
   
   <div class="container mt-3">
     {% include "partials/_message.html" %}
-    {% if expenses %}
+    {% if income %}
     <div class="row">
       <div class="col-md-8"></div>
       <div class="col-md-4">
@@ -34,21 +35,21 @@
         <tr>
           <th>Amount ({{currency}})</th>
           <th>Description</th>
-          <th>Category</th>
+          <th>Source</th>
           <th>Date</th>
           <th></th>
         </tr>
       </thead>
       
-        {% for expense in page_obj %}
+        {% for income in page_obj %}
           <tbody>
 
             <tr >
-              <td>{{expense.amount}}</td>
-              <td>{{expense.description}}</td>
-              <td>{{expense.category}}</td>
-              <td>{{expense.date | date:'d-m-Y'}}</td>
-              <td><a href="{% url "edit-expense" expense.id %}" class="btn btn-secondary btn-sm">Edit</a></td>
+              <td>{{income.amount}}</td>
+              <td>{{income.description}}</td>
+              <td>{{income.source}}</td>
+              <td>{{income.date | date:'d-m-Y'}}</td>
+              <td><a href="{% url "edit-income" income.id %}" class="btn btn-secondary btn-sm">Edit</a></td>
             </tr>
  
           </tbody>
@@ -63,13 +64,13 @@
           <tr>
             <th>Amount ({{currency}})</th>
             <th>Description</th>
-            <th>Category</th>
+            <th>Source</th>
             <th>Date</th>
             
           </tr>
         </thead>
         
-          {% for expense in page_obj %}
+          {% for income in page_obj %}
             <tbody class="table-body">
   
               
@@ -86,8 +87,8 @@
         </span>
             
       </div>
-      <div class="col-md-6">
-<nav aria-label="Page navigation example">
+    <div class="col-md-6">
+    <nav aria-label="Page navigation example">
       <ul class="pagination justify-content-end">
         {% if page_obj.has_previous %}
 
@@ -121,5 +122,5 @@
 
 
 </div>
-<script src = "{% static "js/searchExpenses.js" %}"></script>
+<script src = "{% static "js/searchIncome.js" %}"></script>
 {% endblock content %}

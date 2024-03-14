@@ -27,6 +27,7 @@ def index(request):
     }
     return render(request, 'expenses/index.html',context)
 
+
 def search_expenses(request):
     if request.method == 'POST':
         search_str = json.loads(request.body).get('searchTxt')
@@ -37,6 +38,7 @@ def search_expenses(request):
             date__icontains=search_str, owner = request.user)
         data = expenses.values()
         return JsonResponse(list(data), safe=False)    
+
 
 def add_expense(request):
     categories = Category.objects.all()
@@ -64,6 +66,7 @@ def add_expense(request):
         Expense.objects.create(amount = amount, description = description, owner = request.user, date = date, category = category)
         messages.success(request, 'Add expense successfully')
         return redirect('expenses')
+
     
 def edit_expense(request, id):
     expense = Expense.objects.get(pk=id)
@@ -96,7 +99,8 @@ def edit_expense(request, id):
         expense.save()
         messages.success(request, 'Edit expense successfully')
         return redirect('expenses')
-    
+
+   
 def delete_expense(request, id):
     expense = Expense.objects.get(pk=id)
     expense.delete()      

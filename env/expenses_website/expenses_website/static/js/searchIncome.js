@@ -13,7 +13,7 @@ searchField.addEventListener('keyup',(e)=>{
         paginationContainer.style.display = 'none';
         tbody.innerHTML = "";
         console.log('searchVal', searchVal);
-        fetch("/search-expenses", {
+        fetch("/income/search-income", {
             body : JSON.stringify({ searchTxt: searchVal }),
             method : "POST",
         })
@@ -24,17 +24,17 @@ searchField.addEventListener('keyup',(e)=>{
             tableOutput.style.display = 'block';
             
             if(data.length === 0 ){
-                noResults.style.display = 'block';
+                noResults.style.display = "block";
                 tableOutput.style.display = 'none';
                 
             }else{
-                noResults.style.display = 'none';
+                noResults.style.display = "none";
                 data.forEach(item => {
                     tbody.innerHTML += `
                     <tr >
                     <td>${item.amount}</td>
                     <td>${item.description}</td>
-                    <td>${item.category}</td>
+                    <td>${item.source}</td>
                     <td>${item.date}</td>
                     </tr>
                     `;
