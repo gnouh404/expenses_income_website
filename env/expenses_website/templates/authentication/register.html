@@ -24,7 +24,7 @@
                 placeholder="Username"
                 id="usernameField"
                 class="form-control form-control-sm "
-                value="{{fieldVal.username}}"
+                value="{{values.username}}"
               />
             </div>
             <div class="invalid_feedback invalid-feedback" style="display:none">
@@ -41,7 +41,7 @@
                 placeholder="Email"
                 id="emailField"
                 class="form-control form-control-sm"
-                value="{{fieldVal.email}}"
+                value="{{values.email}}"
               />
             </div>
             <div class="emailFeedbackArea invalid-feedback" style="display:none">
@@ -65,6 +65,7 @@
           <div class="d-grid gap-2">
             <input type="submit" value="Register" class="btn btn-block btn-primary submit-btn" />
           </div>
+          <a href="{% url "login" %}">Login</a><a href="{% url "reset-password" %}">Reset password</a>
         </form>
       </div>
     </div>
