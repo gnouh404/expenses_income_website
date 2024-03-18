@@ -16,9 +16,13 @@ from django.contrib.sites.shortcuts import get_current_site
 from .utils import account_activation_token
 from django.contrib import auth
 from django.contrib.auth.tokens import PasswordResetTokenGenerator
+
+import threading
+
 # Create your views here.
 # validate_email chua dung
 # View là class có sẵn của django dùng làm lớp cha của các lớp cần tạo
+
 class EmailValidationView(View):
     def post(self, request):
         data = json.loads(request.body)
@@ -86,7 +90,8 @@ class RegistrationView(View):
                     "noreply@example.com",
                     [email],
                 )
-                email.send(fail_silently=False)
+                #  cho phép các hoạt động trong phương thức run() chạy song song với các hoạt động khác trong ứng dụng của bạn, giúp tăng hiệu suất và khả năng xử lý đa luồng
+                EmailThread(email).start()
                 messages.success(request, "Account successfully created")
                 return render(request, 'authentication/register.html')
             
@@ -183,7 +188,8 @@ class ResetPassword(View):
                 "noreply@example.com",
                 [email],
             )
-            email.send(fail_silently=False)
+            #  cho phép các hoạt động trong phương thức run() chạy song song với các hoạt động khác trong ứng dụng của bạn, giúp tăng hiệu suất và khả năng xử lý đa luồng
+            EmailThread(email).start()
             messages.success(request, 'Please check your email!')
             return render(request, 'authentication/reset-password.html')
 
@@ -227,5 +233,11 @@ class CompletePasswordReset(View):
         except Exception:
             messages.info(request, 'Something went wrong, try again')
             return render(request, 'authentication/set-new-password.html', context)
-    
+# speed up email sending
+class EmailThread(threading.Thread):
+    def __init__(self, email) :
+        self.email = email
+        threading.Thread.__init__(self)
+    def run(self) :
+        self.email.send(fail_silently=False)       
                     
