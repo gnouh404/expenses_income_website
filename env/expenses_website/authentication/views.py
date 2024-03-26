@@ -75,7 +75,7 @@ class RegistrationView(View):
                 user.set_password(password)
                 user.is_active = False
                 user.save()
-                # lấy miền của người dùng đang sử dụng, url tương đối
+                # lấy miền của người dùng đang sử dụng, url tương đối, mã hóa id user, tạo token
                 uidb64 = urlsafe_base64_encode(force_bytes(user.pk))
                 domain = get_current_site(request).domain
                 link = reverse('activate', kwargs={'uidb64':uidb64, 'token': account_activation_token.make_token(user)})
@@ -96,8 +96,8 @@ class RegistrationView(View):
                 return render(request, 'authentication/register.html')
             
         return render(request, 'authentication/register.html')
-# url tương đối tới verification
-# mã hóa uid, token        
+
+# giải mã uid, token        
 class VerificationView(View):
     def get(self, request, uidb64, token):
         
