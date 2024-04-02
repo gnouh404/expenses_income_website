@@ -13,22 +13,23 @@
     </div>
 
     <div class="col-md-2">
-        <a href="{% url "add-expense" %}" class="btn btn-primary">asc</a>
     </div>
   </div>
   <div class="row ">
-    <div class="col-md-8">
-     <canvas id="myChart" width="300" height="300"></canvas>
-        </div><div class="col-md-4">
-        </div>
+    <div class="col-md-12">
+      <div id="chartdiv" ></div>
+  
     
-     </div>
+  
     </div>
     
-      
-
-
-
 </div>
+
 <script src = "{% static "js/stats.js" %}"></script>
+<style>
+  #chartdiv {
+    width: 100%;
+    height: 600px;
+  }
+  </style>
 {% endblock content %}
