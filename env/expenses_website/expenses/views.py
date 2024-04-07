@@ -130,8 +130,9 @@ def expense_category_summary(request):
         for y in category_list:
             # set key     set value
             finalrep[y] = get_expense_category_amount(y)
-    
-    return JsonResponse({'expense_category_data':finalrep}, safe=False)
+    # sort finalrep by value
+    sorted_dict = {k: v for k, v in sorted(finalrep.items(), key=lambda item: item[1])}
+    return JsonResponse({'expense_category_data':sorted_dict}, safe=False)
 
 def stats_view(request):
     return render(request, 'expenses/stats.html')        
