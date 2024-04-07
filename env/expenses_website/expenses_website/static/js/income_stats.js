@@ -1,11 +1,10 @@
 
-
 const getChartData=()=>{
-    fetch('/expense-category-summary')
+    fetch('/income/income-source-summary')
     .then(res=>res.json())
     .then((response)=>{
         console.log("response",response);
-        const category_data = response.expense_category_data;
+        const source_data = response.income_source_data;
         // const mang_rong = [];
         // Lấy danh sách các cặp key-value từ đối tượng category_data và thêm vào mảng rỗng
         // Object.entries(category_data).forEach(([key, value]) => {
@@ -64,7 +63,7 @@ const getChartData=()=>{
             
             var xAxis = chart.xAxes.push(am5xy.CategoryAxis.new(root, {
               maxDeviation: 0.3,
-              categoryField: "category",
+              categoryField: "source",
               renderer: xRenderer,
               tooltip: am5.Tooltip.new(root, {})
             }));
@@ -87,7 +86,7 @@ const getChartData=()=>{
               yAxis: yAxis,
               valueYField: "amount",
               sequencedInterpolation: true,
-              categoryXField: "category",
+              categoryXField: "source",
               tooltip: am5.Tooltip.new(root, {
                 labelText: "{valueY}"
               })
@@ -138,19 +137,11 @@ const getChartData=()=>{
             //   country: "Canada",
             //   value: 441
             // }];
-            // var chart_data = {};
-            // for(var i = 0; i < response.expense_category_data.length; i++)
-            // {
-            // chart_data.push({ 
-            // "category" : response.expense_category_data[i].category,
-            // "value"  : parseFloat(response.expense_category_data[i].value)
-            // });
-            // }
             
-            // console.log(chart_data);
+            
             var data = [];
-            Object.entries(category_data).forEach(([key,value]) => {
-              data.push({category:key, amount:value});
+            Object.entries(source_data).forEach(([key,value]) => {
+              data.push({source:key, amount:value});
             });
             console.log('data', data);
             xAxis.data.setAll(data);
